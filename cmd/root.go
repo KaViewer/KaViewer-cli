@@ -2,21 +2,57 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-
+	"github.com/kaviewer/kaviewer-cli/cmd/common"
+	"github.com/kaviewer/kaviewer-cli/cmd/docker"
+	"github.com/kaviewer/kaviewer-cli/cmd/mvn"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 var rootCmd = &cobra.Command{
-	Use: "kaviewer",
+	Use:   "kaviewer",
+	Short: "Setup KaViewer asap.",
+	Long:  "KaViewer-cli is a tool to setup KaViewer with advantage cmd.",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("KaViewer Cli")
+
 	},
 }
 
+func run() {
+	var run = &cobra.Command{
+		Use:   "run",
+		Short: "Run KaViewer",
+		Run: func(cmd *cobra.Command, args []string) {
+			common.ExecCmd("java", "-jar", "app/target/app-0.0.1.jar")
+		},
+	}
+
+	rootCmd.AddCommand(run)
+
+}
+
+func clean() {
+
+	var clean = &cobra.Command{
+		Use:   "clean",
+		Short: "Clean Jar",
+		Run: func(cmd *cobra.Command, args []string) {
+			common.ExecCmd("mvn", "clean")
+		},
+	}
+	rootCmd.AddCommand(clean)
+}
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
+
+func init() {
+	run()
+	clean()
+
+	rootCmd.AddCommand(docker.Docker)
+	rootCmd.AddCommand(mvn.Maven)
 }
