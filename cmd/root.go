@@ -23,10 +23,18 @@ func run() {
 		Use:   "run",
 		Short: "Run KaViewer",
 		Run: func(cmd *cobra.Command, args []string) {
-			common.ExecCmd("java", "-jar", "app/target/app-0.0.1.jar")
+			 runnerJar := "app/target/app-0.0.1.jar"
+			jar, _ := cmd.Flags().GetString("jar")
+
+			if jar != "" {
+				runnerJar = jar
+
+			}
+			common.ExecCmd("java", "-jar", runnerJar)
 		},
 	}
 
+	run.Flags().StringP("jar", "j", "app/target/app-0.0.1.jar", "the runner jar location")
 	rootCmd.AddCommand(run)
 
 }
