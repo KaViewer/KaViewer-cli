@@ -23,7 +23,7 @@ func run() {
 		Use:   "run",
 		Short: "Run KaViewer",
 		Run: func(cmd *cobra.Command, args []string) {
-			 runnerJar := "app/target/app-0.0.1.jar"
+			runnerJar := "app/target/app-0.0.1.jar"
 			jar, _ := cmd.Flags().GetString("jar")
 
 			if jar != "" {
@@ -36,6 +36,19 @@ func run() {
 
 	run.Flags().StringP("jar", "j", "app/target/app-0.0.1.jar", "the runner jar location")
 	rootCmd.AddCommand(run)
+
+}
+
+func build() {
+	var build = &cobra.Command{
+		Use:   "build",
+		Short: "build KaViewer",
+		Run: func(cmd *cobra.Command, args []string) {
+			// build both front and back end
+		},
+	}
+
+	rootCmd.AddCommand(build)
 
 }
 
@@ -60,6 +73,7 @@ func Execute() {
 func init() {
 	run()
 	clean()
+	build()
 
 	rootCmd.AddCommand(docker.Docker)
 	rootCmd.AddCommand(mvn.Maven)
