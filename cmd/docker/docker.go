@@ -20,8 +20,8 @@ func build() {
 	var build = &cobra.Command{
 		Use: "build",
 		Run: func(cmd *cobra.Command, args []string) {
-			//buildType, _ := cmd.Flags().GetString("type")
-
+			buildType, _ := cmd.Flags().GetString("type")
+			Handle(buildType)
 		},
 	}
 
