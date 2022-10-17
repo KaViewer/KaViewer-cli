@@ -25,7 +25,7 @@ func build() {
 		},
 	}
 
-	build.Flags().StringP("type", "t", "local", "Indicate which the image type to build [local/app]")
+	build.Flags().StringP("type", "t", "", "Indicate which the image type to build [local/app]")
 	Docker.AddCommand(build)
 }
 
